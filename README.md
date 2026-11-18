@@ -106,6 +106,18 @@ iOS 17 or macOS 14. Built with Swift 6 tools (Xcode 16 or later); tested with Xc
 [`Examples/PreviewsApp`](Examples/PreviewsApp) is an app with SwiftUI, UIKit, and
 `PreviewProvider` previews. Run it with `tuist generate` and `tuist xcodebuild test --snapshots`.
 
+## Acknowledgements
+
+This library builds on the ideas of [SnapshotPreviews](https://github.com/getsentry/SnapshotPreviews),
+created by Emerge Tools and now maintained by Sentry. The approach comes from it:
+
+- finding previews through the binary's conformance records;
+- adding one XCTest test per preview at runtime;
+- exporting PNGs with JSON metadata to `SNAPSHOTS_EXPORT_DIR`.
+
+We kept its export format, so images rendered by either library upload to Tuist the same way.
+Thank you to its authors.
+
 ## License
 
 MIT

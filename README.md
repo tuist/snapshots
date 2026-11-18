@@ -27,20 +27,23 @@ import TuistSnapshotsTesting
 final class PreviewSnapshotTests: PreviewSnapshotTestCase {}
 ```
 
-Then run the tests with Tuist, which uploads the images and compares them with the baseline:
+Then run your tests with Tuist in CI. In a project connected to Tuist, it uploads the images and
+compares them with the baseline. Nothing else needs configuring:
 
 ```bash
 # Projects Tuist generates
-tuist test --snapshots
+tuist test
 
 # Any Xcode project
-tuist xcodebuild test --snapshots -scheme MyApp -destination 'platform=iOS Simulator,name=iPhone 17'
+tuist xcodebuild test -scheme MyApp -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
 
 The run fails when images changed and nobody has approved the changes yet. Review and approve them
 in the Tuist dashboard, or with the Approve button on the pull request's check.
 
-Without `--snapshots`, each test attaches its image to the test result instead.
+- **Local runs don't upload,** because they would compare uncommitted changes. Pass `--snapshots` to
+  upload one anyway, or `--no-snapshots` to stop uploads in CI.
+- **When Tuist doesn't export the images,** each test attaches its image to the test result instead.
 
 ### What gets rendered
 
@@ -91,8 +94,8 @@ final class PreviewSnapshotTests: PreviewSnapshotTestCase {
   binaries are needed.
 - **Rendering.** Each preview renders in a window on the simulator, so UIKit content, safe areas,
   and trait changes behave as in the app.
-- **Exporting.** When `SNAPSHOTS_EXPORT_DIR` is set (`tuist … --snapshots` sets
-  `TEST_RUNNER_SNAPSHOTS_EXPORT_DIR`), it writes each image there as a PNG. Next to it goes a JSON
+- **Exporting.** When `SNAPSHOTS_EXPORT_DIR` is set (`tuist test` and `tuist xcodebuild test` set
+  `TEST_RUNNER_SNAPSHOTS_EXPORT_DIR` when they upload snapshots), it writes each image there as a PNG. Next to it goes a JSON
   file with `display_name`, `group`, `tags` and `diff_threshold`. It also writes
   `tuist-all-image-names.txt`, which lists every preview. `tuist snapshots upload <dir>` reads that
   format, so you can also upload the directory yourself.
@@ -104,7 +107,8 @@ iOS 17 or macOS 14. Built with Swift 6 tools (Xcode 16 or later); tested with Xc
 ## Example
 
 [`Examples/PreviewsApp`](Examples/PreviewsApp) is an app with SwiftUI, UIKit, and
-`PreviewProvider` previews. Run it with `tuist generate` and `tuist xcodebuild test --snapshots`.
+`PreviewProvider` previews. Run it with `tuist generate` and `tuist xcodebuild test --snapshots`, which
+also uploads from a local run.
 
 ## Acknowledgements
 

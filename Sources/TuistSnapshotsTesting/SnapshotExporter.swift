@@ -4,7 +4,7 @@ import Foundation
 /// with the same name, in the format Sentry's snapshot uploads use (`display_name`, `group`,
 /// `tags`, `diff_threshold`).
 struct SnapshotExporter {
-    /// `tuist test --snapshots` and `tuist xcodebuild test --snapshots` set
+    /// `tuist test` and `tuist xcodebuild test` set
     /// `TEST_RUNNER_SNAPSHOTS_EXPORT_DIR`, which xcodebuild passes to the test process without
     /// its prefix.
     static let directoryVariable = "SNAPSHOTS_EXPORT_DIR"

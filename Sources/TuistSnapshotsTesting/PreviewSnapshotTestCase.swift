@@ -13,8 +13,8 @@ import XCTest
 /// ```
 ///
 /// Each preview becomes a test named `test_<image name>`, so it can be filtered with
-/// `-only-testing`. When `SNAPSHOTS_EXPORT_DIR` is set, which `tuist test --snapshots` and
-/// `tuist xcodebuild test --snapshots` do, the images are written there for Tuist to upload and
+/// `-only-testing`. When `SNAPSHOTS_EXPORT_DIR` is set, which `tuist test` and
+/// `tuist xcodebuild test` do when they upload snapshots, the images are written there for Tuist to upload and
 /// compare with their baselines. Otherwise each image is attached to its test result.
 open class PreviewSnapshotTestCase: XCTestCase {
     /// Override to leave previews out, for example the ones of a module.
